@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Asset</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Asset</h1>
+        <form action="/edit-asset/<%= asset.id %>" method="post">
+            <!-- Include all necessary fields here with current values -->
+            <label>Asset Class:</label>
+            <input type="text" name="asset_class" value="<%= asset.asset_class %>" required>
+            <label>Asset Number:</label>
+            <input type="text" name="asset_number" value="<%= asset.asset_number %>" required>
+            <label>Investment Order:</label>
+            <input type="text" name="investment_order" value="<%= asset.investment_order %>">
+            <label>Asset Name:</label>
+            <input type="text" name="asset_name" value="<%= asset.asset_name %>" required>
+            <label>Serial Number:</label>
+            <input type="text" name="serial_number" value="<%= asset.serial_number %>">
+            <label>Merk:</label>
+            <input type="text" name="merk" value="<%= asset.merk %>">
+            <label>Type:</label>
+            <input type="text" name="type" value="<%= asset.type %>">
+            <label>Branch Code:</label>
+            <input type="text" name="branch_code" value="<%= asset.branch_code %>">
+            <label>Branch Name:</label>
+            <input type="text" name="branch_name" value="<%= asset.branch_name %>">
+            <label>Division Name:</label>
+            <input type="text" name="division_name" value="<%= asset.division_name %>">
+            <label>Department Name:</label>
+            <input type="text" name="department_name" value="<%= asset.department_name %>">
+            <label>User Name:</label>
+            <input type="text" name="user_name" value="<%= asset.user_name %>">
+            <label>Acquisition Price:</label>
+            <input type="number" step="0.01" name="acquisition_price" value="<%= asset.acquisition_price %>">
+            <label>Acquisition Year:</label>
+            <input type="date" name="acquisition_year" value="<%= asset.acquisition_year %>">
+            <label>Amortization Percentage:</label>
+            <input type="number" step="0.01" name="amortization_percentage" value="<%= asset.amortization_percentage %>">
+            <label>Condition:</label>
+            <select name="condition">
+                <option value="Good" <% if (asset.condition === 'Good') { %>selected<% } %>>Good</option>
+                <option value="Damaged" <% if (asset.condition === 'Damaged') { %>selected<% } %>>Damaged</option>
+                <option value="Lost" <% if (asset.condition === 'Lost') { %>selected<% } %>>Lost</option>
+                <option value="Updated" <% if (asset.condition === 'Updated') { %>selected<% } %>>Updated</option>
+                <option value="Deleted" <% if (asset.condition === 'Deleted') { %>selected<% } %>>Deleted</option>
+            </select>
+            <button type="submit">Update Asset</button>
+        </form>
+    </div>
+</body>
+</html>

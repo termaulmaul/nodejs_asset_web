@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Asset Management</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Asset Management</h1>
+        <a href="/add-asset">Add New Asset</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Asset Class</th>
+                    <th>Asset Number</th>
+                    <th>Investment Order</th>
+                    <th>Asset Name</th>
+                    <th>Serial Number</th>
+                    <th>Merk</th>
+                    <th>Type</th>
+                    <th>Branch Code</th>
+                    <th>Branch Name</th>
+                    <th>Division Name</th>
+                    <th>Department Name</th>
+                    <th>User Name</th>
+                    <th>Acquisition Price</th>
+                    <th>Acquisition Year</th>
+                    <th>Amortization Percentage</th>
+                    <th>Condition</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% assets.forEach(asset => { %>
+                    <tr>
+                        <td><%= asset.asset_class %></td>
+                        <td><%= asset.asset_number %></td>
+                        <td><%= asset.investment_order %></td>
+                        <td><%= asset.asset_name %></td>
+                        <td><%= asset.serial_number %></td>
+                        <td><%= asset.merk %></td>
+                        <td><%= asset.type %></td>
+                        <td><%= asset.branch_code %></td>
+                        <td><%= asset.branch_name %></td>
+                        <td><%= asset.division_name %></td>
+                        <td><%= asset.department_name %></td>
+                        <td><%= asset.user_name %></td>
+                        <td><%= asset.acquisition_price %></td>
+                        <td><%= asset.acquisition_year %></td>
+                        <td><%= asset.amortization_percentage %></td>
+                        <td><%= asset.condition %></td>
+                        <td>
+                            <a href="/edit-asset/<%= asset.id %>">Edit</a>
+                            <form action="/delete-asset/<%= asset.id %>" method="post" style="display:inline;">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
