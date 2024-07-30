@@ -1,14 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset Management</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
 </head>
 <body>
+    <div class="sidebar">
+        <img id="menu-icon" src="assets/icons/Menu.png" alt="Menu Icon" onclick="toggleSidebar()"/>
+        <div class="menu-item">
+            <a href="index.html">
+                <img class="icon icon1" src="/assets/icons/Home Page.png" alt="Home Page Icon" />
+                <span class="icon-text">Home</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="dashboard.html">
+                <img class="icon icon2" src="assets/icons/Analytics.png" alt="Analytics Icon" />
+                <span class="icon-text">Dashboard</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="validisasi.html">
+                <img class="icon icon3" src="assets/icons/Checked Identification Documents.png" alt="Checked Identification Documents Icon" />
+                <span class="icon-text">Validisasi</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="profile.html">
+                <img class="icon icon4" src="assets/icons/User.png" alt="User Icon" />
+                <span class="icon-text">Profile</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="login.html">
+                <img class="icon icon5" src="assets/icons/Logout.png" alt="Logout Icon" />
+                <span class="icon-text">Logout</span>
+            </a>
+        </div>
+    </div>
+
     <div class="container">
-        <h1>Asset Management</h1>
-        <a href="/add-asset">Add New Asset</a>
-        <table>
+        <div class="header-buttons">
+            <a href="/add-asset">
+                <div class="button tambah">
+                    <img src="assets/icons/MacOS Maximize.png" alt="Tambah" />Tambah Asset
+                </div>
+            </a>
+            <div class="button pilih">
+                <img src="assets/icons/Multiple Choice.png" alt="Pilih" />Pilih
+            </div>
+            <div class="button hapus">
+                <img src="assets/icons/Delete.png" alt="Hapus" />Hapus
+            </div>
+            <div class="button perbarui">
+                <img src="assets/icons/Replay.png" alt="Perbarui" />Perbarui
+            </div>
+        </div>
+        <div class="search-bar">
+            <div class="input">
+                <img src="assets/icons/Search.png" alt="Search" />
+                <span class="text">Cari Asset</span>
+            </div>
+        </div>
+        <table class="asset-table">
             <thead>
                 <tr>
                     <th>Asset Class</th>
@@ -32,33 +88,39 @@
             </thead>
             <tbody>
                 <% assets.forEach(asset => { %>
-                    <tr>
-                        <td><%= asset.asset_class %></td>
-                        <td><%= asset.asset_number %></td>
-                        <td><%= asset.investment_order %></td>
-                        <td><%= asset.asset_name %></td>
-                        <td><%= asset.serial_number %></td>
-                        <td><%= asset.merk %></td>
-                        <td><%= asset.type %></td>
-                        <td><%= asset.branch_code %></td>
-                        <td><%= asset.branch_name %></td>
-                        <td><%= asset.division_name %></td>
-                        <td><%= asset.department_name %></td>
-                        <td><%= asset.user_name %></td>
-                        <td><%= asset.acquisition_price %></td>
-                        <td><%= asset.acquisition_year %></td>
-                        <td><%= asset.amortization_percentage %></td>
-                        <td><%= asset.condition %></td>
-                        <td>
-                            <a href="/edit-asset/<%= asset.id %>">Edit</a>
-                            <form action="/delete-asset/<%= asset.id %>" method="post" style="display:inline;">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
+                <tr>
+                    <td><%= asset.asset_class %></td>
+                    <td><%= asset.asset_number %></td>
+                    <td><%= asset.investment_order %></td>
+                    <td><%= asset.asset_name %></td>
+                    <td><%= asset.serial_number %></td>
+                    <td><%= asset.merk %></td>
+                    <td><%= asset.type %></td>
+                    <td><%= asset.branch_code %></td>
+                    <td><%= asset.branch_name %></td>
+                    <td><%= asset.division_name %></td>
+                    <td><%= asset.department_name %></td>
+                    <td><%= asset.user_name %></td>
+                    <td><%= asset.acquisition_price %></td>
+                    <td><%= asset.acquisition_year %></td>
+                    <td><%= asset.amortization_percentage %></td>
+                    <td><%= asset.condition %></td>
+                    <td>
+                        <a href="/edit-asset/<%= asset.id %>">Edit</a>
+                        <form action="/delete-asset/<%= asset.id %>" method="post" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
                 <% }); %>
             </tbody>
         </table>
     </div>
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('expanded');
+        }
+    </script>
 </body>
 </html>

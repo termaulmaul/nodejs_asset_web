@@ -10,6 +10,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+// Serve static files from the "assets" directory
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
 
 // Halaman login
 app.get('/login', (req, res) => {
