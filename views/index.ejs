@@ -8,59 +8,59 @@
 </head>
 <body>
     <div class="sidebar">
-        <img id="menu-icon" src="assets/icons/Menu.png" alt="Menu Icon" onclick="toggleSidebar()"/>
+        <img id="menu-icon" src="/assets/icons/Menu.png" alt="Menu Icon" onclick="toggleSidebar()" style="position: relative; top: 15px; opacity:1;"/>
         <div class="menu-item">
             <a href="index.html">
-                <img class="icon icon1" src="/assets/icons/Home Page.png" alt="Home Page Icon" />
+                <img class="icon icon1" src="/assets/icons/Home.png" alt="Home Page Icon" />
                 <span class="icon-text">Home</span>
             </a>
         </div>
         <div class="menu-item">
             <a href="dashboard.html">
-                <img class="icon icon2" src="assets/icons/Analytics.png" alt="Analytics Icon" />
-                <span class="icon-text">Dashboard</span>
+                <img class="icon icon2" src="/assets/icons/Analytics.png" alt="Analytics Icon" style="opacity: 1;"/>
+                <span class="icon-text" style="opacity: 1;">Dashboard</span>
             </a>
         </div>
         <div class="menu-item">
             <a href="validisasi.html">
-                <img class="icon icon3" src="assets/icons/Checked Identification Documents.png" alt="Checked Identification Documents Icon" />
+                <img class="icon icon3" src="/assets/icons/Checked Identification Documents.png" alt="Checked Identification Documents Icon" />
                 <span class="icon-text">Validisasi</span>
             </a>
         </div>
         <div class="menu-item">
             <a href="profile.html">
-                <img class="icon icon4" src="assets/icons/User.png" alt="User Icon" />
+                <img class="icon icon4" src="/assets/icons/User.png" alt="User Icon" />
                 <span class="icon-text">Profile</span>
             </a>
         </div>
         <div class="menu-item">
-            <a href="login.html">
-                <img class="icon icon5" src="assets/icons/Logout.png" alt="Logout Icon" />
+            <a href="/login">
+                <img class="icon icon5" src="/assets/icons/Logout.png" alt="Logout Icon" />
                 <span class="icon-text">Logout</span>
             </a>
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" style="position: absolute; top: -18px; ">
         <div class="header-buttons">
             <a href="/add-asset">
                 <div class="button tambah">
-                    <img src="assets/icons/MacOS Maximize.png" alt="Tambah" />Tambah Asset
+                    <img src="/assets/icons/MacOS Maximize.png" alt="Tambah" />Tambah Asset
                 </div>
             </a>
             <div class="button pilih">
-                <img src="assets/icons/Multiple Choice.png" alt="Pilih" />Pilih
+                <img src="/assets/icons/Multiple Choice.png" alt="Pilih" />Pilih
             </div>
             <div class="button hapus">
-                <img src="assets/icons/Delete.png" alt="Hapus" />Hapus
+                <img src="/assets/icons/Delete.png" alt="Hapus" />Hapus
             </div>
             <div class="button perbarui">
-                <img src="assets/icons/Replay.png" alt="Perbarui" />Perbarui
+                <img src="/assets/icons/Replay.png" alt="Perbarui" />Perbarui
             </div>
         </div>
         <div class="search-bar">
             <div class="input">
-                <img src="assets/icons/Search.png" alt="Search" />
+                <img src="/assets/icons/Search.png" alt="Search" />
                 <span class="text">Cari Asset</span>
             </div>
         </div>
@@ -120,6 +120,7 @@
     <script>
         function toggleSidebar() {
             document.querySelector('.sidebar').classList.toggle('expanded');
+            document.querySelector('#menu-icon').classList.toggle('slide-out');
         }
     </script>
 </body>

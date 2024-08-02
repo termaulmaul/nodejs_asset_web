@@ -7,8 +7,7 @@ body {
 
 .container {
     width: 1440px;
-    margin-left: 140px; /* memberikan ruang untuk sidebar */
-    padding: 20px;
+    
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -38,6 +37,7 @@ body {
 .sidebar img {
     width: 30px;
     cursor: pointer;
+    opacity: 0.5;
     transition: all 0.3s;
 }
 
@@ -52,6 +52,10 @@ body {
 
 .menu-item {
     width: 100%;
+    position: relative;
+    top: 50px;
+    left: 8px;
+    margin: 15px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -76,9 +80,13 @@ body {
     display: inline-block;
 }
 
+#menu-icon.slide-out {
+    left: 45px; /* Adjust this value to match the expanded sidebar width */
+}
+
 .header-buttons {
-    margin-left: 40px; /* Untuk memberikan jarak dari sidebar */
-    margin-top: 20px;
+    margin-left: 100px; /* Untuk memberikan jarak dari sidebar */
+    margin-top: 64px;
 }
 
 .header-buttons .button {
@@ -108,17 +116,17 @@ body {
 }
 
 .header-buttons .pilih {
-    background: #E2E2E2;
+    background: white;
 }
 
 .header-buttons .hapus {
-    background: #DC3545;
-    color: white;
+    background: #ffffff;
+    color: black;
 }
 
 .header-buttons .perbarui {
-    background: #007bff;
-    color: white;
+    background: white;
+    color: black;
 }
 
 .search-bar {
@@ -131,11 +139,15 @@ body {
     align-items: center;
     padding: 0 10px;
     position: relative;
+    top: 18px;
+    margin-left: 114px;
 }
 
 .search-bar .input {
-    flex: 1;
+    width: 79px;
     height: 20px;
+    position: absolute;
+    left: 90%;
     background: white;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
@@ -151,7 +163,7 @@ body {
 .search-bar .input img {
     width: 15px;
     height: 15px;
-    margin-left: auto;
+    margin-left: 0px;
 }
 
 .search-bar .input .text {
@@ -159,21 +171,22 @@ body {
 }
 
 .asset-table {
-    width: 100%;
+    width:  calc(100% - 118px);
     background: #F2F2F2;
     border-radius: 10px;
     overflow: hidden;
     margin-top: 20px;
+    margin-left: 114px;
 }
 
 .asset-table thead {
-    background-color: #007bff;
+    background-color: #063462;
     color: white;
 }
 
 .asset-table thead th {
     padding: 12px;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: bold;
     text-align: left;
 }
@@ -188,7 +201,7 @@ body {
 
 .asset-table tbody td {
     padding: 12px;
-    font-size: 14px;
+    font-size: 11px;
     color: #333;
 }
 
@@ -216,3 +229,6 @@ body {
 .asset-table .actions button:hover {
     background-color: #c82333;
 }
+
+/* add-asset */
+
