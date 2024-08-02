@@ -58,12 +58,12 @@
                 <img src="/assets/icons/Replay.png" alt="Perbarui" />Perbarui
             </div>
         </div>
-        <div class="search-bar">
+        <form method="get" action="/assets" class="search-bar">
             <div class="input">
                 <img src="/assets/icons/Search.png" alt="Search" />
-                <span class="text">Cari Asset</span>
+                <input type="text" name="search" placeholder="Cari Asset" value="<%= searchQuery %>"/>
             </div>
-        </div>
+        </form>
         <table class="asset-table">
             <thead>
                 <tr>
@@ -107,12 +107,12 @@
                     <td><%= asset.condition %></td>
                     <td>
                         <a href="/edit-asset/<%= asset.id %>">Edit</a>
-                        <form action="/delete-asset/<%= asset.id %>" method="post" style="display:inline;">
+                        <form method="post" action="/delete-asset/<%= asset.id %>" style="display:inline;">
                             <button type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>
-                <% }); %>
+                <% }) %>
             </tbody>
         </table>
     </div>

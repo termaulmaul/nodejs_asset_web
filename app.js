@@ -1,17 +1,39 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const session = require('express-session');
 const db = require('./src/database'); // Assuming database.js is in src
 
 const app = express();
 const PORT = 3000;
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+// Middleware setup
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from 'public' folder
 app.use('/assets', express.static(path.join(__dirname, 'assets'))); // Serve assets from 'assets' folder
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// Set up session middleware
+app.use(session({
+    secret: 'your-secret-key', // Change this to a secure key in production
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Authentication middleware
+function ensureAuthenticated(req, res, next) {
+    if (req.session.loggedIn) {
+        return next();
+    }
+    res.redirect('/login');
+}
+
+// Redirect root URL to login
+app.get('/', (req, res) => {
+    res.redirect('/login');
+});
 
 // Halaman login
 app.get('/login', (req, res) => {
@@ -21,8 +43,12 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
     db.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, results) => {
-        if (err) throw err;
+        if (err) {
+            console.error('Database query error:', err);
+            return res.send('An error occurred.');
+        }
         if (results.length > 0) {
+            req.session.loggedIn = true; // Set session to indicate user is logged in
             res.redirect('/assets');
         } else {
             res.send('Invalid credentials.');
@@ -31,50 +57,101 @@ app.post('/login', (req, res) => {
 });
 
 // Halaman utama aset
-app.get('/assets', (req, res) => {
-    db.query('SELECT * FROM assets', (err, results) => {
-        if (err) throw err;
-        res.render('index', { assets: results });
+app.get('/assets', ensureAuthenticated, (req, res) => {
+    const searchQuery = req.query.search || '';
+
+    // Use LIKE query for all fields
+    const query = `
+        SELECT * FROM assets
+        WHERE asset_class LIKE ? OR
+              asset_number LIKE ? OR
+              investment_order LIKE ? OR
+              asset_name LIKE ? OR
+              serial_number LIKE ? OR
+              merk LIKE ? OR
+              type LIKE ? OR
+              branch_code LIKE ? OR
+              branch_name LIKE ? OR
+              division_name LIKE ? OR
+              department_name LIKE ? OR
+              user_name LIKE ? OR
+              acquisition_price LIKE ? OR
+              acquisition_year LIKE ? OR
+              amortization_percentage LIKE ? OR
+              condition LIKE ?`;
+
+    // Prepare an array of parameters for the query
+    const params = Array(15).fill(`%${searchQuery}%`);
+
+    db.query(query, params, (err, results) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.send('An error occurred.');
+        }
+        res.render('index', { assets: results, searchQuery: searchQuery });
     });
 });
 
 // Menambah aset
-app.get('/add-asset', (req, res) => {
+app.get('/add-asset', ensureAuthenticated, (req, res) => {
     res.render('add-asset');
 });
 
-app.post('/add-asset', (req, res) => {
+app.post('/add-asset', ensureAuthenticated, (req, res) => {
     const { asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition } = req.body;
     db.query('INSERT INTO assets (asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition], (err) => {
-        if (err) throw err;
+        if (err) {
+            console.error('Database query error:', err);
+            return res.send('An error occurred.');
+        }
         res.redirect('/assets');
     });
 });
 
 // Mengedit aset
-app.get('/edit-asset/:id', (req, res) => {
+app.get('/edit-asset/:id', ensureAuthenticated, (req, res) => {
     const assetId = req.params.id;
     db.query('SELECT * FROM assets WHERE id = ?', [assetId], (err, results) => {
-        if (err) throw err;
+        if (err) {
+            console.error('Database query error:', err);
+            return res.send('An error occurred.');
+        }
         res.render('edit-asset', { asset: results[0] });
     });
 });
 
-app.post('/edit-asset/:id', (req, res) => {
+app.post('/edit-asset/:id', ensureAuthenticated, (req, res) => {
     const assetId = req.params.id;
     const { asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition } = req.body;
-    db.query('UPDATE assets SET asset_class = ?, asset_number = ?, investment_order = ?, asset_name = ?, serial_number = ?, merk, type = ?, branch_code = ?, branch_name = ?, division_name = ?, department_name = ?, user_name = ?, acquisition_price = ?, acquisition_year = ?, amortization_percentage = ?, condition = ? WHERE id = ?', [asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition, assetId], (err) => {
-        if (err) throw err;
+    db.query('UPDATE assets SET asset_class = ?, asset_number = ?, investment_order = ?, asset_name = ?, serial_number = ?, merk = ?, type = ?, branch_code = ?, branch_name = ?, division_name = ?, department_name = ?, user_name = ?, acquisition_price = ?, acquisition_year = ?, amortization_percentage = ?, condition = ? WHERE id = ?', [asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition, assetId], (err) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.send('An error occurred.');
+        }
         res.redirect('/assets');
     });
 });
 
 // Menghapus aset
-app.post('/delete-asset/:id', (req, res) => {
+app.post('/delete-asset/:id', ensureAuthenticated, (req, res) => {
     const assetId = req.params.id;
     db.query('DELETE FROM assets WHERE id = ?', [assetId], (err) => {
-        if (err) throw err;
+        if (err) {
+            console.error('Database query error:', err);
+            return res.send('An error occurred.');
+        }
         res.redirect('/assets');
+    });
+});
+
+// Logout
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error('Session destroy error:', err);
+            return res.send('An error occurred.');
+        }
+        res.redirect('/login');
     });
 });
 
