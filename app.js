@@ -59,31 +59,8 @@ app.post('/login', (req, res) => {
 // Halaman utama aset
 app.get('/assets', ensureAuthenticated, (req, res) => {
     const searchQuery = req.query.search || '';
-
-    // Use LIKE query for all fields
-    const query = `
-        SELECT * FROM assets
-        WHERE asset_class LIKE ? OR
-              asset_number LIKE ? OR
-              investment_order LIKE ? OR
-              asset_name LIKE ? OR
-              serial_number LIKE ? OR
-              merk LIKE ? OR
-              type LIKE ? OR
-              branch_code LIKE ? OR
-              branch_name LIKE ? OR
-              division_name LIKE ? OR
-              department_name LIKE ? OR
-              user_name LIKE ? OR
-              acquisition_price LIKE ? OR
-              acquisition_year LIKE ? OR
-              amortization_percentage LIKE ? OR
-              condition LIKE ?`;
-
-    // Prepare an array of parameters for the query
-    const params = Array(15).fill(`%${searchQuery}%`);
-
-    db.query(query, params, (err, results) => {
+    const query = 'SELECT * FROM assets WHERE asset_name LIKE ?';
+    db.query(query, [`%${searchQuery}%`], (err, results) => {
         if (err) {
             console.error('Database query error:', err);
             return res.send('An error occurred.');
