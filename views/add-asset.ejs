@@ -4,21 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Asset</title>
-
     <style>
         body {
             font-family: 'Quicksand', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         
         .container {
-            width: 1340px;
-            height: 650px;
-            margin: 20px auto;
-            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
             background: white;
-            box-shadow: 5px 4px 20px rgba(0, 0, 0, 0.25);
-            border-radius: 20px;
-            position: relative; /* Enable positioning of the button */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
         }
         
         .form {
@@ -27,88 +36,29 @@
             gap: 16px;
         }
         
-        .form-column {
-            width: calc(33.33% - 16px); /* 3 columns with gap */
-            box-sizing: border-box;
-        }
-        
         .form-group {
-            margin-bottom: 16px;
+            flex: 1 1 calc(33.33% - 16px);
+            display: flex;
+            flex-direction: column;
         }
         
         .label {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 700;
             color: black;
             margin-bottom: 5px;
         }
         
         .input-container {
-            background: white;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 0, 0, 0.20);
             position: relative;
-            padding: 8px 12px;
         }
         
         .input-container input, .input-container select {
             width: 100%;
-            border: none;
-            padding: 8px;
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-        
-        .input-container input::placeholder, .input-container select::placeholder {
-            color: rgba(0, 0, 0, 0.50);
-            font-size: 12px;
-            font-weight: 700;
-        }
-        
-        .required {
-            color: #FF0000;
-            font-size: 13px;
-        }
-        
-        .optional {
-            font-size: 9px;
-            font-weight: 600;
-        }
-        
-        .input-box {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-        
-        .input-box input[type="date"] {
-            width: 87%;
-            padding: 15px;
-            padding-right: 40px;
+            padding: 10px;
+            border-radius: 4px;
             border: 1px solid #ccc;
-            border-radius: 9px;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            font-family: Quicksand, sans-serif;
-        }
-        
-        /* Adjust the icon position using these classes */
-        .input-box .calendar-icon {
-            position: absolute;
-            pointer-events: none; /* Prevent click events on the icon */
-        }
-        
-        .icon-right {
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        
-        .icon-left {
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+            box-sizing: border-box;
         }
         
         button {
@@ -123,154 +73,132 @@
             margin-top: 20px;
             border-radius: 4px;
             cursor: pointer;
-            position: absolute; /* Position button */
-            bottom: 20px;
-            right: 20px;
+            width: 100%;
         }
         
+        @media (max-width: 768px) {
+            .form-group {
+                flex: 1 1 calc(50% - 16px);
+            }
+        }
         
-        
+        @media (max-width: 480px) {
+            .form-group {
+                flex: 1 1 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Add New Asset</h1>
         <form action="/add-asset" method="post" class="form">
-            <!-- Row 1 -->
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Asset Class <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="text" name="asset_class" placeholder="Masukkan Asset Class" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">Asset Class <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="text" name="asset_class" placeholder="Masukkan Asset Class" required>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Investment Order</label>
-                    <div class="input-container">
-                        <input type="text" name="investment_order" placeholder="Masukkan Investment Order">
-                    </div>
+            <div class="form-group">
+                <label class="label">Asset Number</label>
+                <div class="input-container">
+                    <input type="text" name="asset_number" placeholder="Masukkan Asset Number">
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Asset Name <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="text" name="asset_name" placeholder="Masukkan Asset Name" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">Investment Order</label>
+                <div class="input-container">
+                    <input type="text" name="investment_order" placeholder="Masukkan Investment Order">
                 </div>
             </div>
-            <!-- Row 2 -->
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Serial Number</label>
-                    <div class="input-container">
-                        <input type="text" name="serial_number" placeholder="Masukkan Serial Number">
-                    </div>
+            <div class="form-group">
+                <label class="label">Asset Name <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="text" name="asset_name" placeholder="Masukkan Asset Name" required>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Merk <span class="optional">(Optional)</span></label>
-                    <div class="input-container">
-                        <input type="text" name="merk" placeholder="Masukkan Merk">
-                    </div>
+            <div class="form-group">
+                <label class="label">Serial Number</label>
+                <div class="input-container">
+                    <input type="text" name="serial_number" placeholder="Masukkan Serial Number">
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Type <span class="optional">(Optional)</span></label>
-                    <div class="input-container">
-                        <input type="text" name="type" placeholder="Masukkan Type">
-                    </div>
+            <div class="form-group">
+                <label class="label">Merk <span class="optional">(Optional)</span></label>
+                <div class="input-container">
+                    <input type="text" name="merk" placeholder="Masukkan Merk">
                 </div>
             </div>
-            <!-- Row 3 -->
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Branch Code <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="text" name="branch_code" placeholder="Masukkan Branch Code" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">Type <span class="optional">(Optional)</span></label>
+                <div class="input-container">
+                    <input type="text" name="type" placeholder="Masukkan Type">
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Branch Name <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="text" name="branch_name" placeholder="Masukkan Branch Name" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">Branch Code <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="text" name="branch_code" placeholder="Masukkan Branch Code" required>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Division Name <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="text" name="division_name" placeholder="Masukkan Division Name" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">Branch Name <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="text" name="branch_name" placeholder="Masukkan Branch Name" required>
                 </div>
             </div>
-            <!-- Row 4 -->
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Department Name <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="text" name="department_name" placeholder="Masukkan Department Name" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">Division Name <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="text" name="division_name" placeholder="Masukkan Division Name" required>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">User Name <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="text" name="user_name" placeholder="Masukkan User Name" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">Department Name <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="text" name="department_name" placeholder="Masukkan Department Name" required>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Acquisition Price <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="number" step="0.01" name="acquisition_price" placeholder="Masukkan Acquisition Price" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">User Name <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="text" name="user_name" placeholder="Masukkan User Name" required>
                 </div>
             </div>
-            <!-- Row 5 -->
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Acquisition Year <span class="required">*</span></label>
-                    <div class="input-box">
-                        <input type="date" name="acquisition_year" required>
-                        <span class="calendar-icon icon-left"></span> <!-- Add class here to change position -->
-                    </div>
+            <div class="form-group">
+                <label class="label">Acquisition Price <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="number" step="0.01" name="acquisition_price" placeholder="Masukkan Acquisition Price" required>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Amortization Percentage <span class="required">*</span></label>
-                    <div class="input-container">
-                        <input type="number" step="0.01" name="amortization_percentage" placeholder="Masukkan Amortization Percentage" required>
-                    </div>
+            <div class="form-group">
+                <label class="label">Acquisition Year <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="date" name="acquisition_year" required>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="form-group">
-                    <label class="label">Condition</label>
-                    <div class="input-container">
-                        <select name="condition">
-                            <option value="Good">Good</option>
-                            <option value="Damaged">Damaged</option>
-                            <option value="Lost">Lost</option>
-                            <option value="Updated">Updated</option>
-                            <option value="Deleted">Deleted</option>
-                        </select>
-                    </div>
+            <div class="form-group">
+                <label class="label">Amortization Percentage <span class="required">*</span></label>
+                <div class="input-container">
+                    <input type="number" step="0.01" name="amortization_percentage" placeholder="Masukkan Amortization Percentage" required>
                 </div>
             </div>
-            <button type="submit">Add Asset</button>
+            <div class="form-group">
+                <label class="label">Condition</label>
+                <div class="input-container">
+                    <select name="condition">
+                        <option value="Good">Good</option>
+                        <option value="Damaged">Damaged</option>
+                        <option value="Lost">Lost</option>
+                        <option value="Updated">Updated</option>
+                        <option value="Deleted">Deleted</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" style="flex-basis: 100%; text-align: center;">
+                <button type="submit">Add Asset</button>
+            </div>
         </form>
     </div>
-</body>
 </body>
 </html>

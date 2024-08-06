@@ -75,8 +75,31 @@ app.get('/add-asset', ensureAuthenticated, (req, res) => {
 });
 
 app.post('/add-asset', ensureAuthenticated, (req, res) => {
-    const { asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition } = req.body;
-    db.query('INSERT INTO assets (asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition], (err) => {
+    const { 
+        asset_class, asset_number, investment_order, asset_name, serial_number, 
+        merk, type, branch_code, branch_name, division_name, 
+        department_name, user_name, acquisition_price, acquisition_year, 
+        amortization_percentage, condition 
+    } = req.body;
+
+    const sql = `
+        INSERT INTO assets (
+            asset_class, asset_number, investment_order, asset_name, 
+            serial_number, merk, type, branch_code, branch_name, 
+            division_name, department_name, user_name, acquisition_price, 
+            acquisition_year, amortization_percentage, \`condition\`
+        ) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const values = [
+        asset_class, asset_number, investment_order, asset_name, 
+        serial_number, merk, type, branch_code, branch_name, 
+        division_name, department_name, user_name, acquisition_price, 
+        acquisition_year, amortization_percentage, condition
+    ];
+
+    db.query(sql, values, (err) => {
         if (err) {
             console.error('Database query error:', err);
             return res.send('An error occurred.');
@@ -84,6 +107,7 @@ app.post('/add-asset', ensureAuthenticated, (req, res) => {
         res.redirect('/assets');
     });
 });
+
 
 // Mengedit aset
 app.get('/edit-asset/:id', ensureAuthenticated, (req, res) => {
