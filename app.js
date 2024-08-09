@@ -121,9 +121,31 @@ app.get('/edit-asset/:id', ensureAuthenticated, (req, res) => {
 });
 
 app.post('/edit-asset/:id', ensureAuthenticated, (req, res) => {
-    const assetId = req.params.id;
+    const { id } = req.params;
     const { asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition } = req.body;
-    db.query('UPDATE assets SET asset_class = ?, asset_number = ?, investment_order = ?, asset_name = ?, serial_number = ?, merk = ?, type = ?, branch_code = ?, branch_name = ?, division_name = ?, department_name = ?, user_name = ?, acquisition_price = ?, acquisition_year = ?, amortization_percentage = ?, condition = ? WHERE id = ?', [asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition, assetId], (err) => {
+    
+    const query = `
+        UPDATE assets 
+        SET asset_class = ?, 
+            asset_number = ?, 
+            investment_order = ?, 
+            asset_name = ?, 
+            serial_number = ?, 
+            merk = ?, 
+            type = ?, 
+            branch_code = ?, 
+            branch_name = ?, 
+            division_name = ?, 
+            department_name = ?, 
+            user_name = ?, 
+            acquisition_price = ?, 
+            acquisition_year = ?, 
+            amortization_percentage = ?, 
+            \`condition\` = ? 
+        WHERE id = ?
+    `;
+    
+    db.query(query, [asset_class, asset_number, investment_order, asset_name, serial_number, merk, type, branch_code, branch_name, division_name, department_name, user_name, acquisition_price, acquisition_year, amortization_percentage, condition, id], (err) => {
         if (err) {
             console.error('Database query error:', err);
             return res.send('An error occurred.');
