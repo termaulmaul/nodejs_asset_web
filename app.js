@@ -154,6 +154,7 @@ app.post('/edit-asset/:id', ensureAuthenticated, (req, res) => {
     });
 });
 
+
 // Menghapus aset
 app.post('/delete-asset/:id', ensureAuthenticated, (req, res) => {
     const assetId = req.params.id;
