@@ -108,7 +108,6 @@ app.post('/add-asset', ensureAuthenticated, (req, res) => {
     });
 });
 
-
 // Mengedit aset
 app.get('/edit-asset/:id', ensureAuthenticated, (req, res) => {
     const assetId = req.params.id;
