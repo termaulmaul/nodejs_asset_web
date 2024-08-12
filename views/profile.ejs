@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Quicksand, sans-serif;
+        }
+        .container {
+            width: 1440px;
+            height: 836px;
+            position: relative;
+            background: white;
+        }
+        .sidebar {
+            width: 86px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #053462;
+            box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.25);
+            border-radius: 0 20px 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: width 0.3s;
+            z-index: 1000;
+        }
+        
+        .sidebar.expanded {
+            width: 166px;
+        }
+        
+        .sidebar img {
+            width: 30px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+        
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            width: 100%;
+            padding: 10px 20px;
+        }
+        
+        .menu-item {
+            width: 100%;
+            position: relative;
+            top: 50px;
+            left: 8px;
+            margin: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            transition: all 0.3s;
+        }
+        
+        .icon {
+            width: 30px;
+            transition: all 0.3s;
+        }
+        
+        .icon-text {
+            display: none;
+            margin-left: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            opacity: 0.5;
+        }
+        
+        .sidebar.expanded .icon-text {
+            display: inline-block;
+        }
+        
+        #menu-icon.slide-out {
+            left: 45px; /* Adjust this value to match the expanded sidebar width */
+        }
+
+        .button-container {
+            width: 175px;
+            height: 34px;
+            position: absolute;
+            left: 17%;
+            top: 47px;
+            background: #FBC906;
+            box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+        }
+        .button-text {
+            width: 126px;
+            height: 20px;
+            position: absolute;
+            left: 39px;
+            top: 8px;
+            text-align: center;
+            color: black;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .button-container img {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            left: 11px;
+            top: 5px;
+        }
+        .edit-container {
+            width: 100px;
+            height: 34px;
+            position: absolute;
+            left: 120%;
+            top: 5%;
+            background: white;
+            box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+        }
+        .edit-text {
+            width: 40px;
+            height: 12px;
+            position: absolute;
+            left: 42px;
+            top: 8px;
+            color: black;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .edit-container img {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 8px;
+            top: 8px;
+        }
+        .profile-header {
+            width: 1077px;
+            height: 42px;
+            position: absolute;
+            left: 250px;
+            top: 134px;
+            background: #FFD205;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: left;
+            line-height: 42px;
+            padding-left: 39px;
+            color: black;
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .profile-content {
+            width: 997px;
+            height: 293px;
+            position: absolute;
+            left: 250px;
+            top: 181px;
+            background: #F2F2F2;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding: 35px 60px;
+        }
+        .profile-info {
+            width: 990px;
+            height: 223px;
+            position: relative;
+        }
+        .profile-info div {
+            position: absolute;
+        }
+        .profile-info .info-box {
+            width: 198px;
+            height: 36px;
+            background: white;
+            box-shadow: 2px 2px 4px -2px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+        }
+        .profile-info .info-title {
+            position: absolute;
+            color: black;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .profile-info .info-text {
+            position: absolute;
+            left: 10px;
+            color: black;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .profile-photo {
+            width: 172px;
+            height: 195px;
+            position: absolute;
+            left: 818px;
+            top: 28px;
+            border-radius: 10px;
+            border: 1px rgba(0, 0, 0, 0.70) dotted;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <img id="menu-icon" src="/assets/icons/Menu.png" alt="Menu Icon" onclick="toggleSidebar()" style="position: relative; top: 15px; opacity:1;"/>
+            <div class="menu-item">
+                <a href="/">
+                    <img class="icon icon1" src="/assets/icons/Home.png" alt="Home Page Icon" />
+                    <span class="icon-text">Home</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/dashboard">
+                    <img class="icon icon2" src="/assets/icons/Analytics.png" alt="Analytics Icon"/>
+                    <span class="icon-text">Dashboard</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/validisasi">
+                    <img class="icon icon3" src="/assets/icons/Checked Identification Documents.png" alt="Checked Identification Documents Icon" />
+                    <span class="icon-text">Validisasi</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/profile">
+                    <img class="icon icon4" src="/assets/icons/User.png" alt="User Icon" style="opacity: 1;" />
+                    <span class="icon-text" style="opacity: 1;">Profile</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/logout">
+                    <img class="icon icon5" src="/assets/icons/Logout.png" alt="Logout Icon" />
+                    <span class="icon-text">Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <script>
+            function toggleSidebar() {
+                document.querySelector('.sidebar').classList.toggle('expanded');
+                document.querySelector('#menu-icon').classList.toggle('slide-out');
+            }
+        </script>
+
+        <div class="button-container">
+            <a href="tambah_asset_umum.html" class="button">
+                <div class="button-text">Tambah asset</div>
+                <img src="assets/icons/MacOS Maximize.png" alt="Tambah asset">
+            </a>
+            <div class="edit-container">
+                <div class="edit-text">Edit</div>
+                <img src="assets/icons/Edit.png" alt="Edit">
+            </div>
+        </div>
+        <div class="profile-header">Profil</div>
+        <div class="profile-content">
+            <div class="profile-info">
+                <div style="left: 398px; top: 0;">
+                    <div class="info-title" style="left: 10px; top: 0; width: 70px;">Id. Pekerja</div>
+                    <div class="info-box" style="top: 15px;"></div>
+                    <div class="info-text" style="top: 25px;"><%= user.id %></div>
+                </div>
+                <div style="left: 398px; top: 62px;">
+                    <div class="info-title" style="left: 10px; top: 0; width: 80px">No. Whatsapp</div>
+                    <div class="info-box" style="top: 16px;"></div>
+                    <div class="info-text" style="top: 26px;"><%= user.whatsapp %></div>
+                </div>
+                <div style="left: 0; top: 62px;">
+                    <div class="info-title" style="left: 10px; top: 0;">Email</div>
+                    <div class="info-box" style="top: 15px;"></div>
+                    <div class="info-text" style="top: 25px;"><%= user.email %></div>
+                </div>
+                <div style="left: 0; top: 0;">
+                    <div class="info-title" style="left: 10px; top: 0;">Nama</div>
+                    <div class="info-box" style="top: 15px;"></div>
+                    <div class="info-text" style="top: 25px; width: 70px"><%= user.name %></div>
+                </div>
+                <img src="<%= user.photo %>" class="profile-photo">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -167,6 +167,15 @@ app.post('/delete-asset/:id', ensureAuthenticated, (req, res) => {
     });
 });
 
+// Rute untuk halaman profil
+app.get('/profile', (req, res) => {
+    const user = req.session.user; // Pastikan data user ada dalam session
+    if (!user) {
+        return res.redirect('/login'); // Redirect ke halaman login jika belum login
+    }
+    res.render('/profile', { user: user });
+});
+
 // Logout
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
@@ -177,6 +186,7 @@ app.get('/logout', (req, res) => {
         res.redirect('/login');
     });
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
